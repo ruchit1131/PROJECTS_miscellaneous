@@ -1,0 +1,42 @@
+
+<!DOCTYPE html> 
+<html lang="en"> 
+  <head> 
+    <meta charset="utf-8"> 
+    <title>Logs Watcher</title> 
+  </head> 
+  <body> 
+    <h1>Logs</h1>
+    <div id = "logs">
+    </div>
+  
+<script src="/socket.io/socket.io.js"></script> 
+<script> 
+var socket=io();
+var div = document.getElementById("logs");
+
+
+socket.on('connect', () => { 
+  console.log('Connected to the log Server'); 
+}); 
+  
+
+// message listener from server 
+socket.on('data',(data) => { 
+  data.forEach((item,index) => {
+    var textNode = document.createTextNode(item);
+    div.appendChild(textNode);
+
+    var lb = document.createElement("br");
+    div.appendChild(lb);
+  });
+}); 
+  
+
+// when disconnected from server 
+socket.on('disconnect', () => { 
+  console.log('Disconnect from log server'); 
+}); 
+</script> 
+  </body> 
+</html> 
